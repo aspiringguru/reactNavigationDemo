@@ -13,7 +13,10 @@ import {
   Button,
 } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
+import {
+  StackNavigator,
+  TabNavigator,
+} from 'react-navigation';
 
 
 /*
@@ -51,7 +54,21 @@ class HomeScreen extends React.Component {
   }/* end render */
 }/* end class HomeScreen extends React.Component */
 
+/*
+*
+*
+*/
+class RecentChatsScreen extends React.Component {
+  render() {
+    return <Text>List of recent chats</Text>
+  }
+}
 
+class AllContactsScreen extends React.Component {
+  render() {
+    return <Text>List of all contacts</Text>
+  }
+}
 
 /*
 *
@@ -79,10 +96,17 @@ class ChatScreen extends React.Component {
 }/* end class ChatScreen extends React.Component */
 
 
-
+/*
 const SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
   Chat: { screen: ChatScreen },
 });
+*/
+
+const SimpleApp = TabNavigator({
+  Recent: { screen: RecentChatsScreen },
+  All: { screen: AllContactsScreen },
+});
+
 
 AppRegistry.registerComponent('SimpleApp', () => SimpleApp);
