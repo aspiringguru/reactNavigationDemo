@@ -35,13 +35,16 @@ class HomeScreen extends React.Component {
       <View>
         <Text>Hello, Chat App!</Text>
         <Button
-          onPress={() => navigate('Chat')}
+          onPress={() => navigate('Chat', { user: 'Lucy', postcode: 4000, color: 'red' })}
           title="Chat with Lucy"
         />
-        <Text>---------------</Text>
         <Button
-          onPress={() => navigate('Chat2')}
+          onPress={() => navigate('Chat', { user: 'Wendy', postcode: 2000, color: 'blue' })}
           title="Chat with Wendy"
+        />
+        <Button
+          onPress={() => navigate('Chat', { user: 'Sam', postcode: 3000, color: 'green' })}
+          title="Chat with Sam"
         />
       </View>
     )
@@ -49,50 +52,37 @@ class HomeScreen extends React.Component {
 }/* end class HomeScreen extends React.Component */
 
 
-/*
-*     2nd screen added for demo purposes.
-**    todo : move this to an external file and import
-*/
-class HomeScreen2 extends React.Component {
-  static navigationOptions = {
-    title: 'WelcomeTwo',
-  };
-  render() {
-    return <Text>Hello, Navigation Two!</Text>;
-  }
-}/* end class HomeScreen2 extends React.Component */
 
+/*
+*
+*   NB navigate('Chat', { user: 'Lucy' })
+*   extra params >  navigate('Chat', { user: 'Lucy', postcode: 4000 })
+*   StackNavigator >   Chat: { screen: ChatScreen },
+*   so we need to recover value for navigation.state.params.user
+*/
 class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Chat with Lucy',
-  };
+  static navigationOptions = ({ navigation }) => ({
+      title: `Chat with ${navigation.state.params.user}`,
+  });
+
   render() {
+    /* extract value for user from state.params */
+    const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>Chat with Lucy</Text>
+        <Text>Chat with {params.user}</Text>
+        <Text>Postcode {params.postcode}</Text>
+        <Text>Color {params.color}</Text>
       </View>
     );
   }
 }/* end class ChatScreen extends React.Component */
 
-class ChatScreen2 extends React.Component {
-  static navigationOptions = {
-    title: 'Chat with Wendy',
-  };
-  render() {
-    return (
-      <View>
-        <Text>Chat with Wendy</Text>
-      </View>
-    );
-  }
-}/* end class ChatScreen2 extends React.Component */
 
 
 const SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
   Chat: { screen: ChatScreen },
-  Chat2: { screen: ChatScreen2 },
 });
 
 AppRegistry.registerComponent('SimpleApp', () => SimpleApp);
